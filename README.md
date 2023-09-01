@@ -4,16 +4,14 @@
 
 # Building a Low-Power Sensor Application Using APM — Use Case for PIC18F56Q71 Microcontroller with MCC Melody
 
-This application note demonstrates the effectiveness of the Analog Peripheral Manager (APM), an integrated
-peripheral of the PIC18-Q71 device family, in reducing power consumption by enabling and disabling the
-controlled analog peripherals.
+This project demonstrates the effectiveness of the Analog Peripheral Manager (APM), an integrated peripheral of the PIC18-Q71 device family, in reducing power consumption by enabling and disabling the controlled analog peripherals.
 
-The main idea of the project consists in benchmarking three similar applications, each of which utilize different low power techniques as described below:
+Three similar applications are benchmarked, each of which utilize different low-power techniques as described below:
 <br>
- - [1. Ambient Temperature Basic Application](#1-ambient-temperature-basic-application) - Shows the highest power consumption case by not using any power-saving methods
- - [2. Ambient Temperature Application with APM](#2-ambient-temperature-application-with-apm) - Shows improvements in power savings by using the APM in conjunction with the previous example
- - [3. Ambient Temperature Application with APM and Sleep mode](#3-ambient-temperature-application-with-apm-and-sleep-mode) - Shows the optimal low-power application
-through the use of the APM and Sleep mode technique
+ [1. Ambient Temperature Basic Application](#1-ambient-temperature-basic-application) - Shows the highest power consumption case by not using any power-saving methods.<br>
+ [2. Ambient Temperature Application with APM](#2-ambient-temperature-application-with-apm) - Shows improvements in power savings by using the APM in conjunction with the previous example.<br>
+[3. Ambient Temperature Application with APM and Sleep mode](#3-ambient-temperature-application-with-apm-and-sleep-mode) - Shows the optimal low-power application
+through the use of the APM and Sleep mode technique.<br>
 
 ## Related Documentation
 
@@ -22,7 +20,7 @@ More details and code examples on the PIC18F56Q71 can be found at the following 
 - [PIC18F56Q71 Product Page](https://www.microchip.com/en-us/product/PIC18F56Q71)
 - [PIC18F56Q71 Code Examples on GitHub](https://github.com/microchip-pic-avr-examples/?q=pic18f56q71)
 
-More details about Low Power tips & tricks can be found at the following links:
+More details about Low Power tips and tricks can be found at the following links:
 - [AN1416 - Low-Power Design Guide](https://ww1.microchip.com/downloads/en/Appnotes/90001416a.pdf)
 - [TB3144 - Doze, Idle and PMD Features of 8-Bit PIC® Microcontrollers](https://ww1.microchip.com/downloads/en/Appnotes/90003144B.pdf)
 
@@ -34,13 +32,13 @@ More details about Low Power tips & tricks can be found at the following links:
 
 ## Hardware Used
 
-- The PIC18F56Q71 Curiosity Nano Development Board is used as a test platform:
+- The [PIC18F56Q71 Curiosity Nano Development board](https://www.microchip.com/en-us/development-tool/ev01g21a) is used as a test platform:
     <br><img src="images/pic18f56q71_cnano_board.png" width="800">
 
-- Power Debugger:
+- [Power Debugger](https://www.microchip.com/en-us/development-tool/atpowerdebugger):
     <br><img src="images/power-debugger.png" width="800">
 
-- MCP9700 - Linear Active Thermistor IC
+- [MCP9700 - Linear Active Thermistor IC](https://www.microchip.com/en-us/product/mcp9700):
     <br><img src="images/mcp9700.png" width="400">
 
 
@@ -52,27 +50,27 @@ To program the Curiosity Nano board with this MPLAB X project, follow the steps 
 
 Low-power applications are designed to operate with minimal power consumption while still providing the required functionality. This is achieved using advanced power management techniques, such as power gating, voltage scaling and clock gating. These techniques allow the device to operate in low-power modes when not in use, reducing power consumption and extending battery life. <br>
 
-The three instances of the application were benchmarked using Microchip's Power Debugger and a PIC18F56Q71 Curiosity Nano board. The channel A ammeter of the Power Debugger was connected to the Curiosity Nano board to measure current. The output pin of the MCP9700 was connected to the RA2 pin of the Curiosity Nano board. The next figure depicts the setup for the three application variants.
+The three instances of the application were benchmarked using Microchip's Power Debugger and a PIC18F56Q71 Curiosity Nano board. The channel A ammeter of the Power Debugger was connected to the Curiosity Nano board to measure current. The output pin of the MCP9700 was connected to the RA4 pin of the Curiosity Nano board. The next figure depicts the setup for the three application variants.
 <br><img src="images/low-power-connections.drawio.png" width="800">
 
-**IMPORTANT:** Cut the Target Power strap (J101) for Current measurement, and attach the Power Debugger's ammeter probes to the two terminals of J101. Refer to the PIC18F56Q71 Curiosity Nano User’s Guide for more information about Low-Power measurement.<br> 
+**Important:** Cut the Target Power strap (J101) for Current measurement, and attach the Power Debugger's ammeter probes to the two terminals of J101. Refer to the [PIC18F56Q71 Curiosity Nano User’s Guide](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/UserGuides/PIC18F56Q71-CuriosityNano-HW-UG-DS50003481.pdf) for more information about Low-Power measurement.<br> 
 
-This application note presents one of the most significant characteristics of the APM peripheral - the capability to allow analog modules to be switched on and off without core interaction using the APM internal timer. The below pictures offer an overview of the peripherals utilized to drive the MCP9700
+This project presents one of the most significant characteristics of the APM peripheral - the capability to allow analog modules to be switched on and off without core interaction using the APM internal timer. The below pictures offer an overview of the peripherals utilized to drive the MCP9700
 sensor and acquire data in all three application variants.
 <br><img src="images/low-power-peripherals.png" width="800">
 
-This example is designed to periodically read the ambient temperature using the MCP9700 Linear Active Thermistor ICs sensor, whose output voltage is directly proportional to the measured temperature values ranging from -40°C to +150°C. The obtained data is then transmitted via the Universal Asynchronous Receiver Transmitter (UART) module to MPLAB® Data Visualizer. This sensor is driven using the integrated 10-bit DAC module with the sensor’s lowest accepted operating voltage. According to the sensor's data sheet, the sensor operating current is between 5 and 12 μA, well below the maximum current of 50 mA, which a pin can supply. The output voltage is connected to the positive input of the OPA module used in a noninverting configuration with a 2.67 gain. The output of the OPA is connected internally to Context 1 of the ADC with Computation and Context Switching module, which is configured in Average mode as the Operating Mode. This mode allows the MCU to accumulate eight values in eight seconds, then return the averaged value that will be converted to a representation of the ambient temperature in degrees Celsius readable via the UART module.
+This example is designed to periodically read the ambient temperature using the MCP9700 Linear Active Thermistor ICs sensor, whose output voltage is directly proportional to the measured temperature values ranging from -40°C to +150°C. The obtained data is then transmitted via the Universal Asynchronous Receiver Transmitter (UART) module to MPLAB Data Visualizer. This sensor is driven using the integrated 10-bit DAC module with the sensor’s lowest accepted operating voltage. According to the sensor's data sheet, the sensor operating current is between 5 and 12 μA, well below the maximum current of 50 mA, which a pin can supply. The output voltage is connected to the positive input of the OPA module used in a noninverting configuration with a 2.67 gain. The output of the OPA is connected internally to Context 1 of the ADC with Computation and Context Switching module, which is configured in Average mode as the Operating Mode. This mode allows the MCU to accumulate eight values in eight seconds, then return the averaged value that will be converted to a representation of the ambient temperature in degrees Celsius readable via the UART module.
 
-All the above functions are called in a logical, continuous cycle that is repeated once every 1 second and represented in the diagram below. 
-<br><img src="images/low-power-flow-diagram.png" width="800">
+All the above functions are called in a logical, continuous cycle that is repeated once every one second and represented in the diagram below. 
+<br><img src="images/low-power-flow-diagram.png" width="500">
 
-The software project is built using two types of functions, those generated with MPLAB® Code Configurator (MCC) and custom application functions, such as:
- - <i>`ADC_UserContext1Callback`</i> - sets a flag when the ADC interrupt is generated
- - <i>`ClearADCFlag`</i> - clears the flag set by the previous function
- - <i>`TemperatureProcessing`</i> - processes the temperature. It retrieves the averaged value from eight repeated ADC conversions every one second. The value is represented by the ADC-specific interrupt and processed using the ADC formula to determine the input voltage applied on the pin and stored in the inputADCVoltage variable. Next, it is computed using the specific formula for the MCP9700 sensor, described in its respective data sheet. In the final stage of the cycle, the value stored in the calculatedTemperature variable represents the argument of the PrintTemperature function.
- - <i>`PrintTemperature`</i> - enables the UART communication, sends the specific text and value to the terminal, waits until the transmission is done and disables UART to reduce the necessary power. 
+The software project is built using two types of functions, those generated with MPLAB Code Configurator (MCC) and custom application functions, such as:
+ - `ADC_UserContext1Callback`- sets a flag when the ADC interrupt is generated
+ - `ClearADCFlag` - clears the flag set by the previous function
+ - `TemperatureProcessing` - processes the temperature. It retrieves the averaged value from eight repeated ADC conversions every one second. The value is represented by the ADC-specific interrupt and processed using the ADC formula to determine the input voltage applied on the pin and stored in the `inputADCVoltage` variable. Next, it is computed using the specific formula for the MCP9700 sensor, described in its respective data sheet. In the final stage of the cycle, the value stored in the `calculatedTemperature` variable represents the argument of the `PrintTemperature` function
+ - `PrintTemperature` - enables the UART communication, sends the specific text and value to the terminal, waits until the transmission is done and disables UART to reduce the necessary power 
  
- The infinite <i>`while()`</i> loop checks if the ADC conversions are finalized and then computes and prints the temperature.<br>
+ The infinite `while()` loop checks if the ADC conversions are finalized and then computes and prints the temperature.<br>
 <code>
 
     while(1)
@@ -93,9 +91,9 @@ All the application examples are based on the same concept with power-reducing s
 
 The current consumption is measured with Microchip Power Debugger, and the measurements are displayed using MPLAB Data Visualizer.
 
-All 3 scenarios are designed on the same structure, as it is described below.<br>
+All three scenarios are designed on the same structure, as described below.<br>
 
-The following MCC Melody configuration is required to be set and it is common for all 3 scenarios (different from default configuration):<br>
+The following MCC Melody configuration is required to be set and it is common for all three scenarios (different from default configuration):<br>
 
 1.	Clock Control:
     - Clock Source: HFINTOSC
@@ -177,7 +175,7 @@ The UART module sends the processed ambient temperature in degrees Celsius to th
 
 The DAC module powers the MCP9700 external sensor with the lowest acceptable input (2.30V). The DAC is used instead of I/O pins because the voltage level can be precisely set, and the DAC can be switched on/off by the APM independently, without any other software necessity.<br>
 
-The OPA module amplifies the output voltage from the sensor to enhance the precision of the ambient temperature readings. The OPA is configured as a noninverting programmable gain amplifier with x2.67 gain. The maximum value of the input voltage for the ADC is set to 3.3V, so the maximum voltage after the OPA will also be 3.3V. This gain is chosen to amplify a specific range of ambient temperature, and the maximum output voltage from the sensor is about 1.24V, which implies a temperature range between -50 and 70 degrees Celsius. Refer to Figure 2-17: Output Voltage vs. Ambient from the MCP9700 sensor data sheet for more information. The OPA output is internally connected to the positive input of the ADC.<br>
+The OPA module amplifies the output voltage from the sensor to enhance the precision of the ambient temperature readings. The OPA is configured as a noninverting programmable gain amplifier with x2.67 gain. The maximum value of the input voltage for the ADC is set to 3.3V, so the maximum voltage after the OPA will also be 3.3V. This gain is chosen to amplify a specific range of ambient temperature, and the maximum output voltage from the sensor is about 1.24V, which implies a temperature range between -50 and 70 degrees Celsius. Refer to <i> Figure 2-17: Output Voltage vs. Ambient </i> from the MCP9700 sensor data sheet for more information. The OPA output is internally connected to the positive input of the ADC.<br>
 
 The ADC is configured in Single-Ended mode, with ADCRC as the necessary clock unaffected by the Sleep power-saving mode. It only needs one context, so Context 1 is configured to read the input voltage from a positive channel selection. The operating mode is Average mode, which allows the user to use the Threshold Interrupt mode. It is configured to accumulate up to eight samples then to average the value by right-shifting it with three positions without any voltage levels. A context interrupt is triggered when this value is processed in hardware and stored in the ADFLTR register. Other configurations will be described for each scenario, because every single one presents minor differences as described above.<br>
 
@@ -187,9 +185,9 @@ Other configurations will be described for each example, because every single on
 
 This application will make use of the UTMR for the scheduling of the sensor data readings and processing.<br>
 
-The UTMR module is used as an auto-trigger source for the ADC, and is configured to give a pulse every one second then reset at PR Match. The LFINTOSC is selected as clock source, providing the flexibility to set the period up to nine minutes, depending on user preference.<br>
+The UTMR module is used as an auto-trigger source for the ADC, and is configured to give a pulse every one second then reset at PR Match. The Low-Frequency Internal Oscillator (LFINTOSC) is selected as clock source, providing the flexibility to set the period up to nine minutes, depending on user preference.<br>
 
-In addition of the common part for the MCC Melody configuration, the following settings are required and example specific:
+In addition of the common part for the MCC Melody configuration, the following settings are required and example-specific:
 
 1.	UTMR:
     - Timer Dependency Selector: TU16A
@@ -211,7 +209,7 @@ The APM module is configured with LFINTOSC as clock source with a one second per
 
 <br><img src="images/low-power-apm-timing.png" width="800">
 
-In addition of the common part for the MCC Melody configuration, the following settings are required and scenario specific:
+In addition of the common part for the MCC Melody configuration, the following settings are required and scenario-specific:
 
 1.	APM:
     - Enable APM: Enabled
@@ -252,7 +250,7 @@ In this scenario, the first current usage reduction is shown. The average is aro
 This application will use the APM for the sensor data readings and processing scheduling and Sleep
 mode for power optimization.<br>
 
-In addition of the common part for the MCC Melody configuration, the following settings are required and scenario specific:
+In addition of the common part for the MCC Melody configuration, the following settings are required and scenario-specific:
 
 1.	APM:
     - Enable APM: Enabled
@@ -280,8 +278,13 @@ In addition of the common part for the MCC Melody configuration, the following s
 
 5.	Main.c:
     - Add the following code paragraph at the end of the while(1) function:
-        - **SLEEP();**
-        - **NOP();**
+        
+        <code>
+
+            SLEEP();
+            NOP();
+
+        </code>
 
 **Important:** It is recommended to add a NOP as the immediate instruction after the SLEEP instruction.
 
