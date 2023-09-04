@@ -51,7 +51,7 @@ To program the Curiosity Nano board with this MPLAB X project, follow the steps 
 Low-power applications are designed to operate with minimal power consumption while still providing the required functionality. This is achieved using advanced power management techniques, such as power gating, voltage scaling and clock gating. These techniques allow the device to operate in low-power modes when not in use, reducing power consumption and extending battery life. <br>
 
 The three instances of the application were benchmarked using Microchip's Power Debugger and a PIC18F56Q71 Curiosity Nano board. The channel A ammeter of the Power Debugger was connected to the Curiosity Nano board to measure current. The output pin of the MCP9700 was connected to the RA4 pin of the Curiosity Nano board. The next figure depicts the setup for the three application variants.
-<br><img src="images/low-power-connections.drawio.png" width="800">
+<br><img src="images/low-power-connections.png" width="800">
 
 **Important:** Cut the Target Power strap (J101) for Current measurement, and attach the Power Debugger's ammeter probes to the two terminals of J101. Refer to the [PIC18F56Q71 Curiosity Nano User’s Guide](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/UserGuides/PIC18F56Q71-CuriosityNano-HW-UG-DS50003481.pdf) for more information about Low-Power measurement.<br> 
 
