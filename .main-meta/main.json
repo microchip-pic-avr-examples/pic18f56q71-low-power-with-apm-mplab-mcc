@@ -4,7 +4,7 @@
     "content": {
         "metaDataVersion": "1.3.0",
         "name": "com.microchip.mcu8.mplabx.project.pic18f56q71-low-power-with-apm-mplab-mcc",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "displayName": "Building a Low-Power Sensor Application Using APM — Use Case for PIC18F56Q71 Microcontroller with MCC Melody",
         "projectName": "pic18f56q71-low-power-with-apm-mplab-mcc",
         "shortDescription": "This repository contains code examples that demonstrate the effectiveness of the APM, an integrated peripheral of the PIC18-Q71 device family, in reducing power consumption by enabling and disabling the controlled analog peripherals.",

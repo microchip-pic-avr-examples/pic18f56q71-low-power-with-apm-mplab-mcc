@@ -71,8 +71,8 @@ The software project is built using two types of functions, those generated with
  - `PrintTemperature` - enables the UART communication, sends the specific text and value to the terminal, waits until the transmission is done and disables UART to reduce the necessary power 
  
  The infinite `while()` loop checks if the ADC conversions are finalized and then computes and prints the temperature.<br>
-<code>
 
+```
     while(1)
     {
         if(adcContext1Flag)
@@ -81,7 +81,8 @@ The software project is built using two types of functions, those generated with
             ClearADCFlag();
         }
     }
-</code><br>
+```
+<br>
 
 All three application examples use small, fixed periods for a simple and comprehensive presentation. The benchmarking period is eight seconds long. During this period, eight ADC conversions are accumulated, followed by printing the average ADC value using UART. The APM period can be set up to a maximum of 38 hours, meaning the application can be designed to use less power.<br>
 
@@ -279,12 +280,10 @@ In addition of the common part for the MCC Melody configuration, the following s
 5.	Main.c:
     - Add the following code paragraph at the end of the while(1) function:
         
-        <code>
-
+        ```
             SLEEP();
             NOP();
-
-        </code>
+        ```
 
 **Important:** It is recommended to add a NOP as the immediate instruction after the SLEEP instruction.
 
